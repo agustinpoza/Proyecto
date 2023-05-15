@@ -64,8 +64,25 @@ public class Programa{
 		}
 		return cumplio;
 	}
-	public int calcularPromedio() {
-		
+
+	public PositionList<Par<Integer, Integer>> getAlumnosAprobados() {
+		PositionList<Par<Integer, Integer>> aprobados = new ListaDE<>();
+	    for (Par<Integer, Integer> alumno : listaAlumnos) {
+	        if (alumno.getKey() >= 60) {
+	            aprobados.addLast(alumno);
+	        }
+	    }
+	    return aprobados;
 	}
+	public PositionList<Par<Integer, Integer>> getAlumnosDesaprobados() {
+		PositionList<Par<Integer, Integer>> desaprobados = new ListaDE<>();
+	    for (Par<Integer, Integer> alumno : listaAlumnos) {
+	        if (alumno.getKey() < 60) {
+	            desaprobados.addLast(alumno);
+	        }
+	    }
+	    return desaprobados;
+	}
+	
 
 }

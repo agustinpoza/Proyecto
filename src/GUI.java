@@ -24,7 +24,9 @@ import java.awt.Color;
 import java.awt.Font;
 import javax.swing.JTable;
 import TDADiccionario.Dictionary;
+import TDALista.PositionList;
 import TDADiccionario.DiccionarioHash;
+import java.awt.event.ActionListener;
 
 public class GUI {
 
@@ -42,8 +44,9 @@ public class GUI {
 	private JTable table;
 	private JScrollPane scrollPane;
 	protected Programa p;
-	
-	
+	private JButton btnAprobados;
+	private JButton btnBuscar;
+	private JButton btnDesaprobados;
 	
 	/**
 	 * Launch the application.
@@ -156,10 +159,24 @@ public class GUI {
 		btnBuscar.setBounds(150, 103, 70, 20);
 		frmMalditoFrame.getContentPane().add(btnBuscar);
 		
+		JLabel lblNewLabel_1 = new JLabel("Lista de Alumnos APROBADOS Y DESAPROBADOS");
+		lblNewLabel_1.setFont(new Font("Comic Sans MS", Font.PLAIN, 16));
+		lblNewLabel_1.setBounds(10, 171, 393, 32);
+		frmMalditoFrame.getContentPane().add(lblNewLabel_1);
+		
+		btnAprobados = new JButton("New button");
+		btnAprobados.setBounds(40, 206, 89, 23);
+		frmMalditoFrame.getContentPane().add(btnAprobados);
+		btnAprobados.setAction(Aprobados);
+		
+		btnDesaprobados = new JButton("Desaprobados");
+		btnDesaprobados.setBounds(152, 206, 101, 23);
+		frmMalditoFrame.getContentPane().add(btnDesaprobados);
+		btnDesaprobados.setAction(Desaprobados);
+		
 		
 		
 	}
-	
 	
 	
 	protected void inicio(){
@@ -167,6 +184,31 @@ public class GUI {
 		lblMateria.setText(p.getMateria());
 		
 	}
+	Action Desaprobados = new AbstractAction("Desaprobados") {
+		public void actionPerformed(ActionEvent e) {
+			PositionList<Par<Integer, Integer>> desaprobados = p.getAlumnosDesaprobados();
+	        mostrarAlumnos(desaprobados,"Alumnos Desaprobados");
+
+		}
+	};
+	Action Aprobados = new AbstractAction("Aprobados") {
+		public void actionPerformed(ActionEvent e) {
+			PositionList<Par<Integer, Integer>> aprobados = p.getAlumnosAprobados();
+	        mostrarAlumnos(aprobados,"Alumnos Aprobados");
+
+		}
+		
+	};
+	private void mostrarAlumnos(PositionList<Par<Integer, Integer>> alumnos,String titulo) {
+	    // mostrar en una ventana emergente
+	    StringBuilder sb = new StringBuilder();
+	    sb.append(titulo).append(":\n");
+	    for (Par<Integer, Integer> alumno : alumnos) {
+	        sb.append("LU: ").append(alumno.getValue()).append(", Nota: ").append(alumno.getKey()).append("\n");
+	    }
+	    JOptionPane.showMessageDialog(null, sb.toString(), "Lista de Notas", JOptionPane.INFORMATION_MESSAGE);
+	}
+	
 	Action eliminarAlumno = new AbstractAction("eliminar") {
 		public void actionPerformed(ActionEvent e) {
 			try {
@@ -198,7 +240,7 @@ public class GUI {
 	        if (alumno == null) {
 	            JOptionPane.showMessageDialog(null, "El alumno no está en el sistema", "ERROR", JOptionPane.ERROR_MESSAGE);
 	        } else {
-	            int nota = alumno.getKey();
+	            int nota = alumno.getKey(); 
 	            JOptionPane.showMessageDialog(null, "La nota del alumno es: " + nota, "Congratulation", JOptionPane.INFORMATION_MESSAGE);
 	        }
 	    }
@@ -220,6 +262,8 @@ public class GUI {
 			}
 		}
 	};
-	private JButton btnBuscar;
 	
+
+	
+
 }
