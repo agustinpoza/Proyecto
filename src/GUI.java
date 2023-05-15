@@ -79,6 +79,8 @@ public class GUI {
 		frmMalditoFrame.setBounds(100, 100, 1116, 657);
 		frmMalditoFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		lblMateria = new JLabel();
+		lblMateria.setEnabled(false);
+		lblMateria.setFocusable(false);
 		lblMateria.setForeground(new Color(255, 255, 255));
 		lblMateria.setOpaque(true);
 		lblMateria.setHorizontalAlignment(SwingConstants.CENTER);
@@ -119,6 +121,11 @@ public class GUI {
 		frmMalditoFrame.getContentPane().add(btnCargar);
 		
 		scrollPane = new JScrollPane();
+		scrollPane.setRequestFocusEnabled(false);
+		scrollPane.setVerifyInputWhenFocusTarget(false);
+		scrollPane.setFocusTraversalKeysEnabled(false);
+		scrollPane.setFocusable(false);
+		scrollPane.setEnabled(false);
 		scrollPane.setBounds(854, 61, 236, 546);
 		frmMalditoFrame.getContentPane().add(scrollPane);
 		
@@ -155,6 +162,18 @@ public class GUI {
 		btnBuscar.setAction(buscarAlumno);
 		btnBuscar.setBounds(150, 103, 70, 20);
 		frmMalditoFrame.getContentPane().add(btnBuscar);
+		
+		JButton btnPromedio = new JButton("promedio");
+		btnPromedio.setAction(Promedio);
+		btnPromedio.setBounds(230, 102, 89, 23);
+		frmMalditoFrame.getContentPane().add(btnPromedio);
+		
+		JLabel lblPromedio = new JLabel("\r\n");
+		lblPromedio.setOpaque(true);
+		lblPromedio.setBackground(new Color(0, 0, 0));
+		lblPromedio.setFont(new Font("Comic Sans MS", Font.PLAIN, 16));
+		lblPromedio.setBounds(329, 100, 40, 20);
+		frmMalditoFrame.getContentPane().add(lblPromedio);
 		
 		
 		
@@ -215,5 +234,10 @@ public class GUI {
 		}
 	};
 	private JButton btnBuscar;
-	
+	private final Action Promedio = new SwingAction();
+	private class SwingAction extends AbstractAction {
+		public void actionPerformed(ActionEvent e) {
+			
+		}
+	}
 }

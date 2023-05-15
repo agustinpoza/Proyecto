@@ -63,7 +63,13 @@ public class Programa{
 		return cumplio;
 	}
 	
-	
+	public int promedio() {
+		int prom = 0;
+		for(Position<Par<Integer,Integer>> p : listaAlumnos.positions()) {
+			prom = prom + p.element().getKey();
+		}
+		return prom/listaAlumnos.size();
+	}
 	
 	
 	
