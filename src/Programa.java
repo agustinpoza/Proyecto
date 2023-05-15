@@ -65,7 +65,11 @@ public class Programa{
 		return cumplio;
 	}
 	public int calcularPromedio() {
-		
+		int promedio = 0;
+		for(Position<Par<Integer, Integer>> p : listaAlumnos.positions()) {
+			promedio = promedio + p.element().getKey();
+		}
+		return promedio/listaAlumnos.size();
 	}
 
 }

@@ -156,6 +156,15 @@ public class GUI {
 		btnBuscar.setBounds(150, 103, 70, 20);
 		frmMalditoFrame.getContentPane().add(btnBuscar);
 		
+		lblPromedio = new JLabel("New label");
+		lblPromedio.setBounds(345, 106, 46, 14);
+		frmMalditoFrame.getContentPane().add(lblPromedio);
+		
+		btnPromedio = new JButton("Promedio");
+		btnPromedio.setAction(promedio);
+		btnPromedio.setBounds(230, 102, 89, 20);
+		frmMalditoFrame.getContentPane().add(btnPromedio);
+		
 		
 		
 	}
@@ -221,5 +230,13 @@ public class GUI {
 		}
 	};
 	private JButton btnBuscar;
+	private JLabel lblPromedio;
+	private JButton btnPromedio;
 	
+	Action promedio = new AbstractAction("Promedio") {
+		public void actionPerformed(ActionEvent e) {
+			int prom = p.calcularPromedio();
+			lblPromedio.setText(String.valueOf(prom));
+		}
+	};
 }
