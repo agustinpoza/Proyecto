@@ -41,7 +41,7 @@ public class GUI {
 	
 	protected Dictionary<Integer,Integer> dicAlumnos = new DiccionarioHash<Integer,Integer>();
 	
-	
+	private String Materia;
 	private JTable table;
 	private JScrollPane scrollPane;
 	
@@ -164,8 +164,8 @@ public class GUI {
 	
 	
 	protected void inicio(){
-		String materia = JOptionPane.showInputDialog("Ingrese el nombre de la materia: ");
-		lblMateria.setText(materia);
+		Materia = JOptionPane.showInputDialog("Ingrese el nombre de la materia: ");
+		lblMateria.setText(Materia);
 		
 	}
 	Action eliminarAlumno = new AbstractAction("eliminar") {
@@ -174,7 +174,7 @@ public class GUI {
 				Entry<Integer, Integer> alumno = new Par();
 				alumno =  dicAlumnos.find(Integer.parseInt(txtBuscar.getText()));
 				if(alumno == null) {
-					JOptionPane.showMessageDialog(null, "El alumno no esta en el sistema", "USTED ES RETRASADO/A MENTAL", 0);
+					JOptionPane.showMessageDialog(null, "El alumno no esta en el sistema", "ERROR", 0);
 				}
 				else {
 					dicAlumnos.remove(alumno);
@@ -182,7 +182,7 @@ public class GUI {
 					boolean encontre = false;
 					for(int fila = 0; fila < model.getRowCount() && encontre == false; fila++) {
 						Integer auxLu = (Integer) model.getValueAt(fila, 0);
-						if(alumno.getKey().equals(auxLu)) {
+						if(alumno.getValue().equals(auxLu)) {
 							model.removeRow(fila);
 							encontre = true;
 						}
@@ -190,7 +190,7 @@ public class GUI {
 				}
 				
 			} catch (NumberFormatException | NullPointerException | InvalidKeyException | InvalidEntryException e1) {
-				JOptionPane.showMessageDialog(null, "Datos Ingresados Incorrectos", "USTED ES RETRASADO/A MENTAL", 0);
+				JOptionPane.showMessageDialog(null, "Datos Ingresados Incorrectos", "ERROR", 0);
 				}
 			
 		}
@@ -203,7 +203,7 @@ public class GUI {
 				JOptionPane.showMessageDialog(null, "La nota del alumno ingresado es: "+nota, "Nota", 3);
 				
 			} catch (NumberFormatException | InvalidKeyException | NullPointerException e1) {
-				JOptionPane.showMessageDialog(null, "Datos Ingresados Incorrectos", "USTED ES RETRASADO/A MENTAL", 0);
+				JOptionPane.showMessageDialog(null, "Datos Ingresados Incorrectos", "ERROR", 0);
 				}
 		}
 	};
@@ -214,15 +214,15 @@ public class GUI {
 			Par alumno = new Par();
 			alumno.setLu(Integer.parseInt(txtfLu.getText()));
 			alumno.setNota(Integer.parseInt(txtfNota.getText()));
-			if(dicAlumnos.find((Integer)alumno.getKey())==null){
-				dicAlumnos.insert((Integer)alumno.getKey(), (Integer)alumno.getValue());
+			if(dicAlumnos.find((Integer)alumno.getValue())==null){
+				dicAlumnos.insert((Integer)alumno.getValue(), (Integer)alumno.getKey());
 				DefaultTableModel model = (DefaultTableModel) table.getModel();
-				model.addRow(new Integer[] {(Integer) alumno.getKey(), (Integer)alumno.getValue()});
+				model.addRow(new Integer[] {(Integer) alumno.getValue(), (Integer)alumno.getKey()});
 				}
-			else JOptionPane.showMessageDialog(null, "El alumno ya tiene un nota ingresada", "USTED ES RETRASADO/A MENTAL", 0);
+			else JOptionPane.showMessageDialog(null, "El alumno ya tiene un nota ingresada", "ERROR", 0);
 			}
 			catch (InvalidKeyException | DatoInvalidoException | NumberFormatException e1) {
-				JOptionPane.showMessageDialog(null, "Datos Ingresados Incorrectos", "USTED ES RETRASADO/A MENTAL", 0);
+				JOptionPane.showMessageDialog(null, "Datos Ingresados Incorrectos", "ERROR", 0);
 			}
 		}
 	};

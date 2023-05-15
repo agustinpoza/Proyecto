@@ -1,10 +1,14 @@
 import TDADiccionario.Dictionary;
-import TDADiccionario.DiccionarioHash;
 
 public class Programa {
+	protected String Materia;
+
 	
-	
-	public Dictionary<Integer,String> Dalumnos = new DiccionarioHash<Integer,String>();
+	public <K, V> int notaPromedio(Dictionary<K,V> d) {
+		
+		
+		return 0;
+	}
 	
 	
 	
