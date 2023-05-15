@@ -1,5 +1,7 @@
 package TDALista;
 
+import Auxiliares.Position;
+
 public class Nodo<E> implements Position<E> {
 	private E elemento;
 	private Nodo<E> siguiente;

@@ -1,5 +1,5 @@
+import Auxiliares.Entry;
 import Excepciones.DatoInvalidoException;
-import TDADiccionario.Entry;
 
 public class Par<K, V> implements Entry<K,V>{
 	

@@ -1,4 +1,4 @@
-package TDADiccionario;
+package Auxiliares;
 
 public class Entrada<K,V> implements Entry<K,V> {
 	private K clave;

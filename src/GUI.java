@@ -5,6 +5,7 @@ import javax.swing.JButton;
 import javax.swing.SwingConstants;
 import javax.swing.table.DefaultTableModel;
 
+import Auxiliares.Entry;
 import Excepciones.DatoInvalidoException;
 import Excepciones.InvalidEntryException;
 import Excepciones.InvalidKeyException;
@@ -22,7 +23,6 @@ import java.awt.Color;
 import java.awt.Font;
 import javax.swing.JTable;
 import TDADiccionario.Dictionary;
-import TDADiccionario.Entry;
 import TDADiccionario.DiccionarioHash;
 
 public class GUI {
