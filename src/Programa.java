@@ -65,6 +65,7 @@ public class Programa{
 		return cumplio;
 	}
 
+
 	public PositionList<Par<Integer, Integer>> getAlumnosAprobados() {
 		PositionList<Par<Integer, Integer>> aprobados = new ListaDE<>();
 	    for (Par<Integer, Integer> alumno : listaAlumnos) {
@@ -73,6 +74,14 @@ public class Programa{
 	        }
 	    }
 	    return aprobados;
+	}
+	public int calcularPromedio() {
+		int promedio = 0;
+		for(Position<Par<Integer, Integer>> p : listaAlumnos.positions()) {
+			promedio = promedio + p.element().getKey();
+		}
+		return promedio/listaAlumnos.size();
+
 	}
 	public PositionList<Par<Integer, Integer>> getAlumnosDesaprobados() {
 		PositionList<Par<Integer, Integer>> desaprobados = new ListaDE<>();

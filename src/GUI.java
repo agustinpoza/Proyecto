@@ -159,20 +159,31 @@ public class GUI {
 		btnBuscar.setBounds(150, 103, 70, 20);
 		frmMalditoFrame.getContentPane().add(btnBuscar);
 		
-		JLabel lblNewLabel_1 = new JLabel("Lista de Alumnos APROBADOS Y DESAPROBADOS");
+
+		JLabel lblNewLabel_1 = new JLabel("Alumnos\r\n");
 		lblNewLabel_1.setFont(new Font("Comic Sans MS", Font.PLAIN, 16));
-		lblNewLabel_1.setBounds(10, 171, 393, 32);
+		lblNewLabel_1.setBounds(688, 61, 70, 32);
 		frmMalditoFrame.getContentPane().add(lblNewLabel_1);
 		
 		btnAprobados = new JButton("New button");
-		btnAprobados.setBounds(40, 206, 89, 23);
+		btnAprobados.setBounds(623, 94, 89, 23);
 		frmMalditoFrame.getContentPane().add(btnAprobados);
 		btnAprobados.setAction(Aprobados);
 		
 		btnDesaprobados = new JButton("Desaprobados");
-		btnDesaprobados.setBounds(152, 206, 101, 23);
+		btnDesaprobados.setBounds(722, 94, 101, 23);
 		frmMalditoFrame.getContentPane().add(btnDesaprobados);
 		btnDesaprobados.setAction(Desaprobados);
+
+		lblPromedio = new JLabel("New label");
+		lblPromedio.setBounds(345, 106, 46, 14);
+		frmMalditoFrame.getContentPane().add(lblPromedio);
+		
+		btnPromedio = new JButton("Promedio");
+		btnPromedio.setAction(promedio);
+		btnPromedio.setBounds(230, 102, 89, 20);
+		frmMalditoFrame.getContentPane().add(btnPromedio);
+
 		
 		
 		
@@ -262,8 +273,15 @@ public class GUI {
 			}
 		}
 	};
-	
 
+	private JLabel lblPromedio;
+	private JButton btnPromedio;
 	
+	Action promedio = new AbstractAction("Promedio") {
+		public void actionPerformed(ActionEvent e) {
+			int prom = p.calcularPromedio();
+			lblPromedio.setText(String.valueOf(prom));
+		}
+	};
 
 }
