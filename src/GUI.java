@@ -6,6 +6,7 @@ import javax.swing.SwingConstants;
 import javax.swing.table.DefaultTableModel;
 
 import Auxiliares.Entry;
+import Excepciones.AlumnoRepetidoException;
 import Excepciones.DatoInvalidoException;
 import Excepciones.InvalidEntryException;
 import Excepciones.InvalidKeyException;
@@ -37,13 +38,10 @@ public class GUI {
 	private JTextField txtBuscar;
 	//private Action subirAlumno = new SubirAlumno();
 	
-
-	
-	protected Dictionary<Integer,Integer> dicAlumnos = new DiccionarioHash<Integer,Integer>();
-	
 	private String Materia;
 	private JTable table;
 	private JScrollPane scrollPane;
+	protected Programa p;
 	
 	
 	
@@ -88,6 +86,7 @@ public class GUI {
 		lblMateria.setBackground(new Color(0, 0, 0));
 		lblMateria.setBounds(0, 0, 1100, 50);
 		frmMalditoFrame.getContentPane().add(lblMateria);
+		p = new Programa();
 		
 		inicio();
 		
@@ -164,47 +163,37 @@ public class GUI {
 	
 	
 	protected void inicio(){
-		Materia = JOptionPane.showInputDialog("Ingrese el nombre de la materia: ");
-		lblMateria.setText(Materia);
+		p.setMateria(JOptionPane.showInputDialog("Ingrese el nombre de la materia: "));
+		lblMateria.setText(p.getMateria());
 		
 	}
 	Action eliminarAlumno = new AbstractAction("eliminar") {
-		public void actionPerformed(ActionEvent e) {
+	public void actionPerformed(ActionEvent e) {
 			try {
-				Entry<Integer, Integer> alumno = new Par();
-				alumno =  dicAlumnos.find(Integer.parseInt(txtBuscar.getText()));
-				if(alumno == null) {
-					JOptionPane.showMessageDialog(null, "El alumno no esta en el sistema", "ERROR", 0);
-				}
-				else {
-					dicAlumnos.remove(alumno);
-					DefaultTableModel model = (DefaultTableModel) table.getModel();
-					boolean encontre = false;
-					for(int fila = 0; fila < model.getRowCount() && encontre == false; fila++) {
-						Integer auxLu = (Integer) model.getValueAt(fila, 0);
-						if(alumno.getValue().equals(auxLu)) {
-							model.removeRow(fila);
-							encontre = true;
-						}
+				if(p.eliminarAlumnoLu(Integer.parseInt(txtBuscar.getText()))) {
+				DefaultTableModel model = (DefaultTableModel) table.getModel();
+				boolean encontre = false;
+				for(int fila = 0; fila<model.getRowCount() && encontre == false; fila++) {
+					Integer auxLu = (Integer) model.getValueAt(fila, 0);
+					if(Integer.parseInt(txtfLu.getText()) == auxLu) {
+						model.removeRow(fila);
+						encontre = true;
 					}
 				}
-				
-			} catch (NumberFormatException | NullPointerException | InvalidKeyException | InvalidEntryException e1) {
-				JOptionPane.showMessageDialog(null, "Datos Ingresados Incorrectos", "ERROR", 0);
-				}
-			
+			}
+				else JOptionPane.showMessageDialog(null, "El alumno no esta en el sistema", "ERROR", 0);
+			}
+			catch (NumberFormatException e1) {}	
 		}
 	};
 	
 	Action buscarAlumno = new AbstractAction("buscar") {
 		public void actionPerformed(ActionEvent e) {
-			try {
-				Integer nota = dicAlumnos.find(Integer.parseInt(txtBuscar.getText())).getValue();
-				JOptionPane.showMessageDialog(null, "La nota del alumno ingresado es: "+nota, "Nota", 3);
-				
-			} catch (NumberFormatException | InvalidKeyException | NullPointerException e1) {
-				JOptionPane.showMessageDialog(null, "Datos Ingresados Incorrectos", "ERROR", 0);
-				}
+			Integer i = p.getAlumnoLu(Integer.parseInt(txtBuscar.getText())).getKey();
+			if(i == null) {
+				JOptionPane.showMessageDialog(null, "El alumno no esta en el sistema", "ERROR", 0);
+			}
+			else JOptionPane.showMessageDialog(null, "La nota del alumno es: "+i, "Congratulation", 1);
 		}
 	};
 	
@@ -214,14 +203,13 @@ public class GUI {
 			Par alumno = new Par();
 			alumno.setLu(Integer.parseInt(txtfLu.getText()));
 			alumno.setNota(Integer.parseInt(txtfNota.getText()));
-			if(dicAlumnos.find((Integer)alumno.getValue())==null){
-				dicAlumnos.insert((Integer)alumno.getValue(), (Integer)alumno.getKey());
+			if(p.setAlumno(alumno)) {
 				DefaultTableModel model = (DefaultTableModel) table.getModel();
 				model.addRow(new Integer[] {(Integer) alumno.getValue(), (Integer)alumno.getKey()});
-				}
-			else JOptionPane.showMessageDialog(null, "El alumno ya tiene un nota ingresada", "ERROR", 0);
 			}
-			catch (InvalidKeyException | DatoInvalidoException | NumberFormatException e1) {
+			else JOptionPane.showMessageDialog(null, "Datos Ingresados Incorrectos", "ERROR", 0);
+			}
+			catch (DatoInvalidoException | NumberFormatException e1) {
 				JOptionPane.showMessageDialog(null, "Datos Ingresados Incorrectos", "ERROR", 0);
 			}
 		}
