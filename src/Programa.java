@@ -1,5 +1,6 @@
+import java.util.Iterator;
+
 import Auxiliares.Position;
-import Excepciones.AlumnoRepetidoException;
 import Excepciones.InvalidPositionException;
 import TDADiccionario.Dictionary;
 import TDALista.PositionList;
@@ -25,7 +26,7 @@ public class Programa{
 		}
 		return cumplio;
 	}
-	public Par<Integer,Integer> getAlumnoLu(Integer lu){ //el tiempo de ejecucion es a lo sumo n donde n es la cantidad de alumnos en la lista
+	public Par<Integer,Integer> getAlumnoLu(int lu){ //el tiempo de ejecucion es a lo sumo n donde n es la cantidad de alumnos en la lista
 		Par<Integer,Integer> e = null;
 		for(Position<Par<Integer, Integer>> p : listaAlumnos.positions()) {
 			if(p.element().getValue().equals(lu)) {
@@ -35,7 +36,8 @@ public class Programa{
 		}
 		return e;
 	}
-	public Boolean eliminarAlumnoLu(Integer lu) {
+	
+	public Boolean eliminarAlumnoLu(int lu) { // se cambio Integer por int para mas eficiencia
 		boolean cumplio = false;
 		for(Position<Par<Integer, Integer>> p : listaAlumnos.positions()) {
 			if(p.element().getValue().equals(lu)) {
@@ -62,11 +64,8 @@ public class Programa{
 		}
 		return cumplio;
 	}
-	
-	
-	
-	
-	
-	
-	
+	public int calcularPromedio() {
+		
+	}
+
 }

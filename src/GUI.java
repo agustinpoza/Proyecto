@@ -168,35 +168,41 @@ public class GUI {
 		
 	}
 	Action eliminarAlumno = new AbstractAction("eliminar") {
-	public void actionPerformed(ActionEvent e) {
-			try {
-				if(p.eliminarAlumnoLu(Integer.parseInt(txtBuscar.getText()))) {
-				DefaultTableModel model = (DefaultTableModel) table.getModel();
-				boolean encontre = false;
-				for(int fila = 0; fila<model.getRowCount() && encontre == false; fila++) {
-					Integer auxLu = (Integer) model.getValueAt(fila, 0);
-					if(Integer.parseInt(txtfLu.getText()) == auxLu) {
-						model.removeRow(fila);
-						encontre = true;
-					}
-				}
-			}
-				else JOptionPane.showMessageDialog(null, "El alumno no esta en el sistema", "ERROR", 0);
-			}
-			catch (NumberFormatException e1) {}	
-		}
-	};
-	
-	Action buscarAlumno = new AbstractAction("buscar") {
 		public void actionPerformed(ActionEvent e) {
-			Integer i = p.getAlumnoLu(Integer.parseInt(txtBuscar.getText())).getKey();
-			if(i == null) {
-				JOptionPane.showMessageDialog(null, "El alumno no esta en el sistema", "ERROR", 0);
+			try {
+				int lu = Integer.parseInt(txtBuscar.getText());
+				if (p.eliminarAlumnoLu(lu)) {
+					DefaultTableModel model = (DefaultTableModel) table.getModel();
+					int cantFila = model.getRowCount(); //tamaño de filas
+					for (int fila = 0; fila < cantFila; fila++) {
+						Integer auxLu = (Integer) model.getValueAt(fila, 0);
+						if (lu == auxLu) {
+							model.removeRow(fila);
+							break;
+						}
+					}
+				} else {
+					JOptionPane.showMessageDialog(null, "El alumno no está en el sistema", "ERROR", JOptionPane.ERROR_MESSAGE);
+				}
+			} catch (NumberFormatException e1) {
+				JOptionPane.showMessageDialog(null, "Ingrese un valor numérico válido para el LU", "ERROR", JOptionPane.ERROR_MESSAGE);
 			}
-			else JOptionPane.showMessageDialog(null, "La nota del alumno es: "+i, "Congratulation", 1);
 		}
 	};
-	
+
+
+	Action buscarAlumno = new AbstractAction("buscar") {
+	    public void actionPerformed(ActionEvent e) {
+	        Integer lu = Integer.parseInt(txtBuscar.getText());
+	        Par<Integer, Integer> alumno = p.getAlumnoLu(lu);
+	        if (alumno == null) {
+	            JOptionPane.showMessageDialog(null, "El alumno no está en el sistema", "ERROR", JOptionPane.ERROR_MESSAGE);
+	        } else {
+	            int nota = alumno.getKey();
+	            JOptionPane.showMessageDialog(null, "La nota del alumno es: " + nota, "Congratulation", JOptionPane.INFORMATION_MESSAGE);
+	        }
+	    }
+	};
 	Action subirAlumno = new AbstractAction("agregar") {
 		public void actionPerformed(ActionEvent e) {
 			try {
