@@ -1,8 +1,9 @@
-import java.util.Iterator;
-
+import Auxiliares.Entry;
 import Auxiliares.Position;
+import Excepciones.InvalidKeyException;
 import Excepciones.InvalidPositionException;
 import TDADiccionario.Dictionary;
+import TDADiccionario.DiccionarioHash;
 import TDALista.PositionList;
 import TDALista.ListaDE;
 
@@ -92,6 +93,20 @@ public class Programa{
 	    }
 	    return desaprobados;
 	}
-	
+	public Iterable<Entry<Integer,Integer>> alumnosConNota(int nota) {
+		Dictionary<Integer,Integer> d = new DiccionarioHash<Integer,Integer>();
+		Iterable<Entry<Integer,Integer>> e = null;
+		for(Position<Par<Integer, Integer>> p : listaAlumnos.positions()) {
+			try {
+				d.insert(p.element().getKey(), p.element().getValue());
+			} catch (InvalidKeyException e2) {}
+		}
+		try {
+			e = d.findAll(nota);
+		} catch (InvalidKeyException e1) {}
+		
+		return e;
+	}
+
 
 }

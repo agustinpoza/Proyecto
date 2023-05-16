@@ -11,6 +11,7 @@ import Excepciones.DatoInvalidoException;
 import Excepciones.InvalidEntryException;
 import Excepciones.InvalidKeyException;
 
+import javax.swing.JTextArea;
 import javax.swing.AbstractAction;
 import java.awt.event.ActionEvent;
 import javax.swing.Action;
@@ -47,6 +48,12 @@ public class GUI {
 	private JButton btnAprobados;
 	private JButton btnBuscar;
 	private JButton btnDesaprobados;
+	
+	
+	private JButton btnBuscarNota;
+	private JTextField textNota1;
+	
+	
 	
 	/**
 	 * Launch the application.
@@ -175,7 +182,7 @@ public class GUI {
 		frmMalditoFrame.getContentPane().add(btnDesaprobados);
 		btnDesaprobados.setAction(Desaprobados);
 
-		lblPromedio = new JLabel("New label");
+		lblPromedio = new JLabel("");
 		lblPromedio.setBounds(345, 106, 46, 14);
 		frmMalditoFrame.getContentPane().add(lblPromedio);
 		
@@ -184,7 +191,20 @@ public class GUI {
 		btnPromedio.setBounds(230, 102, 89, 20);
 		frmMalditoFrame.getContentPane().add(btnPromedio);
 
+		btnBuscarNota = new JButton("buscarNota");
+		btnBuscarNota.setAction(buscarNota);
+		btnBuscarNota.setBounds(108, 219, 100, 20);
+		frmMalditoFrame.getContentPane().add(btnBuscarNota);
 		
+		JLabel lblNota_1 = new JLabel("Nota: ");
+		lblNota_1.setFont(new Font("Comic Sans MS", Font.BOLD, 16));
+		lblNota_1.setBounds(10, 219, 60, 20);
+		frmMalditoFrame.getContentPane().add(lblNota_1);
+		
+		textNota1 = new JTextField();
+		textNota1.setColumns(10);
+		textNota1.setBounds(58, 219, 40, 20);
+		frmMalditoFrame.getContentPane().add(textNota1);
 		
 		
 	}
@@ -281,6 +301,19 @@ public class GUI {
 		public void actionPerformed(ActionEvent e) {
 			int prom = p.calcularPromedio();
 			lblPromedio.setText(String.valueOf(prom));
+		}
+	};
+	
+	Action buscarNota = new AbstractAction("buscar nota") {
+		public void actionPerformed(ActionEvent e) {
+			JTextArea textArea = new JTextArea();
+			textArea.setFont(new Font("Comic Sans", Font.PLAIN, 12));
+			for(Entry<Integer,Integer> i : p.alumnosConNota(Integer.parseInt(textNota1.getText()))){
+				textArea.append(i.getValue() + "\n");
+			}
+			JScrollPane scrollPane = new JScrollPane(textArea);
+            scrollPane.setPreferredSize(new java.awt.Dimension(50, 300));
+            JOptionPane.showMessageDialog(null, scrollPane, "Los alumnos con la nota "+textNota1.getText(), 1);
 		}
 	};
 
