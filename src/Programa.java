@@ -137,7 +137,7 @@ public class Programa{
 		}
 		try {
 			while(pq.size() != 0) {
-				pl.addLast( pq.removeMin());
+				pl.addLast(pq.removeMin());
 			}
 		} catch (EmptyPriorityQueueException e1) {} 
 		

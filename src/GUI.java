@@ -34,7 +34,6 @@ public class GUI {
 
 	private JFrame frmMalditoFrame;
 	private JLabel lblMateria;
-	
 	private JLabel lblLU;
 	private JLabel lblNota;
 	private JTextField txtfLu;
@@ -44,18 +43,14 @@ public class GUI {
 	private JLabel lblPromedio;
 	private JButton btnPromedio;
 	private JLabel lblNotaMin;
-	JButton btnNotaMin;
-	//private Action subirAlumno = new SubirAlumno();
-	
-	private String Materia;
+	private JButton btnNotaMin;
 	private JTable table;
 	private JScrollPane scrollPane;
-	protected Programa p;
+	private Programa p;
 	private JButton btnAprobados;
 	private JButton btnBuscar;
 	private JButton btnDesaprobados;
 	private JButton btnNotaMax;
-	
 	private JButton btnBuscarNota;
 	private JTextField textNota1;
 	
@@ -105,8 +100,6 @@ public class GUI {
 		p = new Programa();
 		
 		inicio();
-		
-		
 		
 		lblLU = new JLabel("LU: ");
 		lblLU.setFont(new Font("Comic Sans MS", Font.BOLD, 16));
@@ -235,21 +228,7 @@ public class GUI {
 		lblMateria.setText(p.getMateria());
 		
 	}
-	Action Desaprobados = new AbstractAction("Desaprobados") {
-		public void actionPerformed(ActionEvent e) {
-			PositionList<Par<Integer, Integer>> desaprobados = p.getAlumnosDesaprobados();
-	        mostrarAlumnos(desaprobados,"Alumnos Desaprobados");
-
-		}
-	};
-	Action Aprobados = new AbstractAction("Aprobados") {
-		public void actionPerformed(ActionEvent e) {
-			PositionList<Par<Integer, Integer>> aprobados = p.getAlumnosAprobados();
-	        mostrarAlumnos(aprobados,"Alumnos Aprobados");
-
-		}
-		
-	};
+	
 	private void mostrarAlumnos(PositionList<Par<Integer, Integer>> alumnos,String titulo) {
 	    // mostrar en una ventana emergente
 	    StringBuilder sb = new StringBuilder();
@@ -259,6 +238,24 @@ public class GUI {
 	    }
 	    JOptionPane.showMessageDialog(null, sb.toString(), "Lista de Notas", JOptionPane.INFORMATION_MESSAGE);
 	}
+	
+	Action Desaprobados = new AbstractAction("Desaprobados") {
+		public void actionPerformed(ActionEvent e) {
+			PositionList<Par<Integer, Integer>> desaprobados = p.getAlumnosDesaprobados();
+	        mostrarAlumnos(desaprobados,"Alumnos Desaprobados");
+
+		}
+	};
+	
+	Action Aprobados = new AbstractAction("Aprobados") {
+		public void actionPerformed(ActionEvent e) {
+			PositionList<Par<Integer, Integer>> aprobados = p.getAlumnosAprobados();
+	        mostrarAlumnos(aprobados,"Alumnos Aprobados");
+
+		}
+		
+	};
+	
 	
 	Action eliminarAlumno = new AbstractAction("eliminar") {
 		public void actionPerformed(ActionEvent e) {
