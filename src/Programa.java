@@ -1,7 +1,11 @@
 import Auxiliares.Entry;
 import Auxiliares.Position;
+import Excepciones.EmptyPriorityQueueException;
 import Excepciones.InvalidKeyException;
 import Excepciones.InvalidPositionException;
+import TDAColaCP.Comparador;
+import TDAColaCP.Heap;
+import TDAColaCP.PriorityQueue;
 import TDADiccionario.Dictionary;
 import TDADiccionario.DiccionarioHash;
 import TDALista.PositionList;
@@ -107,6 +111,46 @@ public class Programa{
 		
 		return e;
 	}
+	
+	public int NotaMinima() {
+		PriorityQueue<Integer,Integer> pq = new Heap<Integer,Integer>(new Comparador<Integer>());
+		int toReturn = 0;
+		for(Position<Par<Integer,Integer>> p : listaAlumnos.positions()) {
+			try {
+				pq.insert(p.element().getKey(), p.element().getValue());
+			} catch (InvalidKeyException e) {}
+		}
+		try {
+			toReturn = pq.min().getKey();
+		} catch (EmptyPriorityQueueException e) {}
+		
+		return toReturn;
+	}
+	
+	public PositionList<Entry<Integer,Integer>> NotaMaxima() {
+		PriorityQueue<Integer,Integer> pq = new Heap<Integer,Integer>(new Comparador2<Integer>());
+		PositionList<Entry<Integer,Integer>> pl = new ListaDE<Entry<Integer,Integer>>();
+		for(Position<Par<Integer,Integer>> p : listaAlumnos.positions()) {
+			try {//la cantidad maxima de alumnos es 1000 fijarse cla clase heap construcotor
+				pq.insert(p.element().getKey(), p.element().getValue());
+			} catch (InvalidKeyException e2) {}
+		}
+		try {
+			while(pq.size() != 0) {
+				pl.addLast( pq.removeMin());
+			}
+		} catch (EmptyPriorityQueueException e1) {} 
+		
+		return pl;
+	}
+	
+	private class Comparador2<E> implements java.util.Comparator<E> {
 
+		@Override
+		public int compare(E o1, E o2) {
+			
+			return (((Comparable<E>) o1).compareTo(o2))*-1;
+		}
+	}
 
 }

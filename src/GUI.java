@@ -6,6 +6,7 @@ import javax.swing.SwingConstants;
 import javax.swing.table.DefaultTableModel;
 
 import Auxiliares.Entry;
+import Auxiliares.Position;
 import Excepciones.AlumnoRepetidoException;
 import Excepciones.DatoInvalidoException;
 import Excepciones.InvalidEntryException;
@@ -33,12 +34,17 @@ public class GUI {
 
 	private JFrame frmMalditoFrame;
 	private JLabel lblMateria;
-	private JLabel lblNewLabel;
+	
+	private JLabel lblLU;
 	private JLabel lblNota;
 	private JTextField txtfLu;
 	private JTextField txtfNota;
 	private JButton btnCargar;
 	private JTextField txtBuscar;
+	private JLabel lblPromedio;
+	private JButton btnPromedio;
+	private JLabel lblNotaMin;
+	JButton btnNotaMin;
 	//private Action subirAlumno = new SubirAlumno();
 	
 	private String Materia;
@@ -48,7 +54,7 @@ public class GUI {
 	private JButton btnAprobados;
 	private JButton btnBuscar;
 	private JButton btnDesaprobados;
-	
+	private JButton btnNotaMax;
 	
 	private JButton btnBuscarNota;
 	private JTextField textNota1;
@@ -102,10 +108,10 @@ public class GUI {
 		
 		
 		
-		lblNewLabel = new JLabel("LU: ");
-		lblNewLabel.setFont(new Font("Comic Sans MS", Font.BOLD, 16));
-		lblNewLabel.setBounds(10, 60, 46, 14);
-		frmMalditoFrame.getContentPane().add(lblNewLabel);
+		lblLU = new JLabel("LU: ");
+		lblLU.setFont(new Font("Comic Sans MS", Font.BOLD, 16));
+		lblLU.setBounds(10, 60, 46, 14);
+		frmMalditoFrame.getContentPane().add(lblLU);
 		
 		lblNota = new JLabel("Nota: ");
 		lblNota.setFont(new Font("Comic Sans MS", Font.BOLD, 16));
@@ -183,12 +189,12 @@ public class GUI {
 		btnDesaprobados.setAction(Desaprobados);
 
 		lblPromedio = new JLabel("");
-		lblPromedio.setBounds(345, 106, 46, 14);
+		lblPromedio.setBounds(345, 109, 46, 14);
 		frmMalditoFrame.getContentPane().add(lblPromedio);
 		
 		btnPromedio = new JButton("Promedio");
 		btnPromedio.setAction(promedio);
-		btnPromedio.setBounds(230, 102, 89, 20);
+		btnPromedio.setBounds(230, 109, 103, 20);
 		frmMalditoFrame.getContentPane().add(btnPromedio);
 
 		btnBuscarNota = new JButton("buscarNota");
@@ -205,6 +211,20 @@ public class GUI {
 		textNota1.setColumns(10);
 		textNota1.setBounds(58, 219, 40, 20);
 		frmMalditoFrame.getContentPane().add(textNota1);
+		
+		btnNotaMin = new JButton("Nota Minima");
+		btnNotaMin.setAction(notaMinima);
+		btnNotaMin.setBounds(230, 140, 103, 20);
+		frmMalditoFrame.getContentPane().add(btnNotaMin);
+		
+		lblNotaMin = new JLabel("");
+		lblNotaMin.setBounds(345, 140, 46, 14);
+		frmMalditoFrame.getContentPane().add(lblNotaMin);
+		
+		btnNotaMax = new JButton("Nota Maxima");
+		btnNotaMax.setAction(notaMaxima);
+		btnNotaMax.setBounds(230, 170, 103, 20);
+		frmMalditoFrame.getContentPane().add(btnNotaMax);
 		
 		
 	}
@@ -263,7 +283,6 @@ public class GUI {
 		}
 	};
 
-
 	Action buscarAlumno = new AbstractAction("buscar") {
 	    public void actionPerformed(ActionEvent e) {
 	        Integer lu = Integer.parseInt(txtBuscar.getText());
@@ -276,6 +295,7 @@ public class GUI {
 	        }
 	    }
 	};
+	
 	Action subirAlumno = new AbstractAction("agregar") {
 		public void actionPerformed(ActionEvent e) {
 			try {
@@ -293,9 +313,6 @@ public class GUI {
 			}
 		}
 	};
-
-	private JLabel lblPromedio;
-	private JButton btnPromedio;
 	
 	Action promedio = new AbstractAction("Promedio") {
 		public void actionPerformed(ActionEvent e) {
@@ -316,5 +333,28 @@ public class GUI {
             JOptionPane.showMessageDialog(null, scrollPane, "Los alumnos con la nota "+textNota1.getText(), 1);
 		}
 	};
-
+	
+	Action notaMaxima = new AbstractAction("Nota Maxima") {
+		public void actionPerformed(ActionEvent e) {
+			JTextArea textArea = new JTextArea();
+			textArea.setFont(new Font("Comic Sans", Font.PLAIN, 12));
+			for(Position<Entry<Integer, Integer>> i : p.NotaMaxima().positions()){
+				textArea.append("Alumno: "+i.element().getValue()+"Nota: "+i.element().getKey()+ "\n");
+			}
+			JScrollPane scrollPane = new JScrollPane(textArea);
+            scrollPane.setPreferredSize(new java.awt.Dimension(50, 300));
+            JOptionPane.showMessageDialog(null, scrollPane, "asda" , 1);
+		}
+	};
+	
+	Action notaMinima = new AbstractAction("Nota Minima") {
+		public void actionPerformed(ActionEvent e) {
+			int notaMin = p.NotaMinima();
+			lblNotaMin.setText(String.valueOf(notaMin));
+			
+		}
+	};
+	
+	
+	
 }
