@@ -11,28 +11,44 @@ public class Heap<K,V> implements PriorityQueue<K,V> {
     protected Entrada<K,V> [] elem;
     protected int size;
     protected Comparator<K> cmp;
-
+    /**
+     * inicializamos la cola con prioridad
+     * @param cantidad maxima de entradas que puede tener inicialmente 
+     * @param comparador que utlizaremos
+     */
     public Heap(int maxElem, Comparator<K> cmp) {
         elem = (Entrada<K, V> []) new Entrada[maxElem];
         size = 0;
         this.cmp = cmp;
     }
-
+    /**
+     * inicializamos la cola con prioridad con una cantidad maxima de entradas en 1000
+     * @param comparador que utilizaremos
+     */
     public Heap(Comparator<K> cmp){
         this(1000, cmp);
     }
 
-    @Override
+    /**
+     * consultamos por la cantidad de entradas de la cola con prioridad
+     * @return cantidad de entradas
+     */
     public int size() {
         return size;
     }
 
-    @Override
+    /**
+     * consultamos si la cola con prioridad esta vacia
+     * @return true si esta vacia
+     */
     public boolean isEmpty() {
         return size == 0;
     }
 
-    @Override
+    /**
+     * consultamos cual es la menor entrada
+     * @return menor entrada
+     */
     public Entry<K, V> min() throws EmptyPriorityQueueException {
         if(isEmpty()){
             throw new EmptyPriorityQueueException("Cola vacia.");
@@ -40,7 +56,10 @@ public class Heap<K,V> implements PriorityQueue<K,V> {
         return elem[1];
     }
 
-    @Override
+    /**
+     * insertamos una entrada
+     * @return entrada insertada
+     */
     public Entry<K,V> insert(K key, V value) throws InvalidKeyException {
         if(size+1 >= elem.length){
             reSize();
@@ -64,7 +83,10 @@ public class Heap<K,V> implements PriorityQueue<K,V> {
         return insert;
     }
 
-    @Override
+    /**
+     * removemos la entrada con menor valor
+     * @return entrada removida
+     */
     public Entry<K, V> removeMin() throws EmptyPriorityQueueException {
         if(isEmpty()) {
             throw new EmptyPriorityQueueException("Cola vacia.");
@@ -116,6 +138,9 @@ public class Heap<K,V> implements PriorityQueue<K,V> {
         elem[posParent] = aux;
     }
 
+    /**
+     * aumenta el tamaño maximo de la cola con prioridad
+     */
     private void reSize() {
         Entrada<K,V> [] arr = (Entrada<K, V> []) new Entrada[elem.length*2];
         int i = 0;
@@ -125,6 +150,11 @@ public class Heap<K,V> implements PriorityQueue<K,V> {
         elem = arr;
     }
 
+    /**
+     * chequqamos que la clave sea valida
+     * @param clave
+     * @throws InvalidKeyException si la clave es invalida
+     */
     private void checkKey(K key) throws InvalidKeyException {
         if(key == null) {
             throw new InvalidKeyException("Clave incorrecta.");

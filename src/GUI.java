@@ -6,11 +6,10 @@ import javax.swing.SwingConstants;
 import javax.swing.table.DefaultTableModel;
 
 import Auxiliares.Entry;
+import Auxiliares.Par;
 import Auxiliares.Position;
-import Excepciones.AlumnoRepetidoException;
 import Excepciones.DatoInvalidoException;
-import Excepciones.InvalidEntryException;
-import Excepciones.InvalidKeyException;
+
 
 import javax.swing.JTextArea;
 import javax.swing.AbstractAction;
@@ -25,10 +24,9 @@ import javax.swing.JScrollPane;
 import java.awt.Color;
 import java.awt.Font;
 import javax.swing.JTable;
-import TDADiccionario.Dictionary;
+
 import TDALista.PositionList;
-import TDADiccionario.DiccionarioHash;
-import java.awt.event.ActionListener;
+
 
 public class GUI {
 
@@ -216,7 +214,7 @@ public class GUI {
 		
 		btnNotaMax = new JButton("Nota Maxima");
 		btnNotaMax.setAction(notaMaxima);
-		btnNotaMax.setBounds(230, 170, 103, 20);
+		btnNotaMax.setBounds(230, 170, 145, 20);
 		frmMalditoFrame.getContentPane().add(btnNotaMax);
 		
 		
@@ -239,6 +237,7 @@ public class GUI {
 	    JOptionPane.showMessageDialog(null, sb.toString(), "Lista de Notas", JOptionPane.INFORMATION_MESSAGE);
 	}
 	
+	@SuppressWarnings("serial")
 	Action Desaprobados = new AbstractAction("Desaprobados") {
 		public void actionPerformed(ActionEvent e) {
 			PositionList<Par<Integer, Integer>> desaprobados = p.getAlumnosDesaprobados();
@@ -247,6 +246,7 @@ public class GUI {
 		}
 	};
 	
+	@SuppressWarnings("serial")
 	Action Aprobados = new AbstractAction("Aprobados") {
 		public void actionPerformed(ActionEvent e) {
 			PositionList<Par<Integer, Integer>> aprobados = p.getAlumnosAprobados();
@@ -257,6 +257,7 @@ public class GUI {
 	};
 	
 	
+	@SuppressWarnings("serial")
 	Action eliminarAlumno = new AbstractAction("eliminar") {
 		public void actionPerformed(ActionEvent e) {
 			try {
@@ -280,6 +281,7 @@ public class GUI {
 		}
 	};
 
+	@SuppressWarnings("serial")
 	Action buscarAlumno = new AbstractAction("buscar") {
 	    public void actionPerformed(ActionEvent e) {
 	        Integer lu = Integer.parseInt(txtBuscar.getText());
@@ -293,7 +295,9 @@ public class GUI {
 	    }
 	};
 	
+	@SuppressWarnings("serial")
 	Action subirAlumno = new AbstractAction("agregar") {
+		@SuppressWarnings({ "rawtypes", "unchecked" })
 		public void actionPerformed(ActionEvent e) {
 			try {
 			Par alumno = new Par();
@@ -311,6 +315,7 @@ public class GUI {
 		}
 	};
 	
+	@SuppressWarnings("serial")
 	Action promedio = new AbstractAction("Promedio") {
 		public void actionPerformed(ActionEvent e) {
 			int prom = p.calcularPromedio();
@@ -318,6 +323,7 @@ public class GUI {
 		}
 	};
 	
+	@SuppressWarnings("serial")
 	Action buscarNota = new AbstractAction("buscar nota") {
 		public void actionPerformed(ActionEvent e) {
 			JTextArea textArea = new JTextArea();
@@ -331,19 +337,21 @@ public class GUI {
 		}
 	};
 	
-	Action notaMaxima = new AbstractAction("Nota Maxima") {
+	@SuppressWarnings("serial")
+	Action notaMaxima = new AbstractAction("Nota de mayor a menor") {
 		public void actionPerformed(ActionEvent e) {
 			JTextArea textArea = new JTextArea();
 			textArea.setFont(new Font("Comic Sans", Font.PLAIN, 12));
-			for(Position<Entry<Integer, Integer>> i : p.NotaMaxima().positions()){
-				textArea.append("Alumno: "+i.element().getValue()+"Nota: "+i.element().getKey()+ "\n");
+			for(Position<Entry<Integer, Integer>> i : p.NotaMayorMenor().positions()){
+				textArea.append("Alumno: "+i.element().getValue()+" Nota: "+i.element().getKey()+ "\n");
 			}
 			JScrollPane scrollPane = new JScrollPane(textArea);
             scrollPane.setPreferredSize(new java.awt.Dimension(50, 300));
-            JOptionPane.showMessageDialog(null, scrollPane, "asda" , 1);
+            JOptionPane.showMessageDialog(null, scrollPane, "" , 1);
 		}
 	};
 	
+	@SuppressWarnings("serial")
 	Action notaMinima = new AbstractAction("Nota Minima") {
 		public void actionPerformed(ActionEvent e) {
 			int notaMin = p.NotaMinima();
